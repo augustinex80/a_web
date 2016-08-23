@@ -1,0 +1,41 @@
+{% load static %}
+{% if is_paginated %}
+<nav aria-label="Page navigation">
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+    <li>
+        <a href="?p={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+    </a>
+    </li>
+    {% else %}
+    <li class="disabled">
+        <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+        </a>
+    </li>
+    {% endif %}
+    {% for page in pages %}
+      <li {% if page == page_obj.number or page == '...' %} class="disabled" {% endif %}>
+          <a href="?p={{ page }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+              {{ page }}
+          </a>
+      </li>
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+    <li>
+      <a href="?p={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    {% else %}
+    <li class="disabled">
+      <a href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}

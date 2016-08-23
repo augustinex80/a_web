@@ -1,0 +1,120 @@
+
+.border-dashed-top {
+    border-top: dashed 1px #999999;
+}
+.content {
+    margin-bottom: 30px;
+}
+
+.profile {
+    margin-bottom: 30px;
+}
+.profile-bg-img {
+    background-image: url(../../images/profile-bg.jpg);
+    height: 150px;
+    background-color: #f5f5f5;
+    border: solid 1px #d3e0e9;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom: none;
+    background-size: cover;
+}
+.profile-content {
+    text-align: center;
+    border: solid 1px #d3e0e9;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+.profile-content img {
+    max-width: 100px;
+    margin-top: -50px;
+    border-radius: 100%;
+    border: solid 3px #ffffff;
+}
+.profile-content h5 {
+    font-size: 1.5em;
+}
+.profile-content p {
+    margin-bottom: 20px;
+}
+
+.about {
+    border: solid 1px #d3e0e9;
+    border-radius: 6px;
+    padding: 10px 15px;
+    margin-bottom: 30px;
+}
+.about h5 {
+    font-size: 1.2em;
+}
+.about ul {
+    list-style: none;
+    line-height: 1.5em;
+}
+.j-mg-3em {
+    position: relative;
+    margin-left: 3em;
+}
+.post-list {
+    border: solid 1px #d3e0e9;
+    border-radius: 6px;
+}
+.post-list .border-top {
+    border-top: solid 1px #d3e0e9;
+}
+.post-list .post{
+    padding: 1em 2em;
+}
+.post-img {
+    border: solid 3px #ffffff;
+
+}
+.post {
+    clear: both;
+}
+.post p {
+    color: #666;
+}
+.post-summary {
+    color: #999;
+    font-size: 1em;
+    padding: 3px 0px;
+    margin: 0;
+}
+.post-comment {
+    color: #666;
+    font-size: .8em;
+}
+.post-detail-comment {
+    margin: 1em auto;
+    padding-bottom: .5em;
+    border-bottom: dashed 1px #1c73a5;
+}
+.post-content {
+    margin-top: 2em;
+    padding-bottom: 1em;
+}
+.top-post {
+    vertical-align: middle;
+}
+ul.top-category {
+    padding-left: 1em;
+    padding-right: 1em;
+    list-style-type: none;
+    margin:0;
+}
+.top-category li {
+    float: left;
+    margin-left: 1em;
+    line-height: 3em;
+    height: 3em;
+}
+.page-post {
+    padding: .5em 2em;
+}
+.page-post nav {
+    padding: 0em;
+}
+.page-post .pagination {
+    margin: 0em;
+}

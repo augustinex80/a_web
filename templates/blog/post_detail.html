@@ -1,0 +1,27 @@
+{% extends 'blog/blog_content.html' %}
+{% load static %}
+{% block post_detail %}
+<div class="post border-top">
+  <div class="media">
+      <div class="media-left media-top">
+          <a href="{{ post.get_absolute_url }}">
+              <img src="{% if post.pic %}{{ post.pic.url }}{% else %}{% static 'images/0.jpeg' %}{% endif %}" width="64" height="64"
+                   class="post-img bb2" alt=""></a>
+      </div>
+      <div class="media-body">
+            <h3 class="media-heading"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+      {% if post.summary %}
+            <p class="post-summary">{{ post.summary }}</p>
+      {% endif %}
+            <p class="post-comment post-detail-comment">
+              {% if post.category %}
+              <a href="{% url 'post:list_of_category' post.category_id %}">{{ post.category.name }}</a>
+              {% else %}
+              未分类
+              {% endif %}
+              - 阅读 {{ post.click }} - 赞 {{ post.commend }} - {{ post.updated|timesince }} ago</p>
+            <p class="post-content">{{ post.content }} </p>
+      </div>
+  </div>
+</div>
+{% endblock %}
