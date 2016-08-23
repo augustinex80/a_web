@@ -4,15 +4,24 @@
 <div class="row">
       <div class="post-list">
           <div class="top-post">
-              <ul id="category" class="top-category">
+              <ul id="category" class="ls-ul">
               {% if categories %}
-                  <li><a href="{% url 'post:list' %}">All</a></li>
+                  <li><a href="{% url 'post:list' %}">All Categories</a></li>
               {% endif %}
                   {% for ca in categories %}
                       <li><a href="{{ ca.get_absolute_url }}">{{ ca.name }}</a></li>
                   {% empty %}
                       <li>还没有添加分类</li>
                   {% endfor %}
+              </ul>
+          </div>
+        <div class="">
+              <ul id="tags" class="border-top ls-ul">
+              {% for t in tags %}
+                  <li><a href="{% url 'post:tag_posts' t.pk t.name %}">{{ t.name }} - {{ t.posts_count }}</a></li>
+              {% empty %}
+                  <li>还没有添加标签</li>
+              {% endfor %}
               </ul>
           </div>
             {% block post_list %}

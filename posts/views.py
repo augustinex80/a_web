@@ -6,7 +6,7 @@ from django.http import Http404
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
-from .models import Post, Category
+from .models import Post, Tag
 
 
 def login_req(view):
@@ -52,6 +52,13 @@ class PostList(ListView):
     def get_queryset(self):
         cate_id = self.kwargs.get('cate_id')
         q = self.request.GET.get('q')
+
+        tid = self.kwargs.get('tid')
+        tname = self.kwargs.get('tname')
+        if tid and tname:
+            tag = get_object_or_404(Tag, pk=tid, name=tname)
+            return tag.post_set.all()
+
         queryset = Post.objects.all()
         if cate_id:
             queryset = queryset.filter(category_id=cate_id)
@@ -61,6 +68,7 @@ class PostList(ListView):
                                        Q(content__icontains=q)|
                                        Q(category__name__icontains=q)
                                        ).distinct()
+
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -92,3 +100,5 @@ class PostDetail(DetailView):
         context['blog'] = 1
 
         return context
+
+

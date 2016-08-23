@@ -10,6 +10,42 @@ def get_pic_location(instance, filename):
     return pic_path
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=120)
+    timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
+    updated = models.DateTimeField(auto_now=False, auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_posts_count(self):
+        return self.post_set.count()
+
+    def get_posts(self):
+        return self.post_set.all()
+
+    class Meta:
+        verbose_name = verbose_name_plural = 'Tags'
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=120)
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now=True, auto_now_add=False)
+
+    def __unicode__(self):
+        return self.name
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('post:list_of_category', kwargs={'cate_id': self.id})
+
+    class Meta:
+        verbose_name_plural = "Categories"
+
+
 class Post(models.Model):
     DRAFT = 0
     PUBLISHED = 1
@@ -29,6 +65,7 @@ class Post(models.Model):
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
     status = models.IntegerField(default=PUBLISHED, choices=POST_STATUS)
+    tag = models.ManyToManyField(Tag)
 
     def __unicode__(self):
         return self.title
@@ -43,19 +80,4 @@ class Post(models.Model):
         ordering = ['-timestamp', ]
 
 
-class Category(models.Model):
-    name = models.CharField(max_length=120)
-    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 
-    def __unicode__(self):
-        return self.name
-
-    def __str__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        return reverse('post:list_of_category', kwargs={'cate_id': self.id})
-
-    class Meta:
-        verbose_name_plural = "Categories"

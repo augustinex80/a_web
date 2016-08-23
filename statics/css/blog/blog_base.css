@@ -97,13 +97,16 @@
 .top-post {
     vertical-align: middle;
 }
-ul.top-category {
+.top-post ul {
+    overflow: auto;
+}
+ul.ls-ul {
     padding-left: 1em;
     padding-right: 1em;
     list-style-type: none;
     margin:0;
 }
-.top-category li {
+.ls-ul li {
     float: left;
     margin-left: 1em;
     line-height: 3em;
