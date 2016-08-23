@@ -112,6 +112,12 @@ ul.ls-ul {
     line-height: 3em;
     height: 3em;
 }
+.tag ul li{
+    padding-left: 1em;
+}
+.tag-blue {
+    color: #1c73a5;
+}
 .page-post {
     padding: .5em 2em;
 }

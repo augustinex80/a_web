@@ -1,4 +1,5 @@
 {% extends 'blog/blog_content.html' %}
+{% load djangomarkdown %}
 {% load static %}
 {% block post_detail %}
 <div class="post border-top">
@@ -20,7 +21,7 @@
               未分类
               {% endif %}
               - 阅读 {{ post.click }} - 赞 {{ post.commend }} - {{ post.updated|timesince }} ago</p>
-            <p class="post-content">{{ post.content }} </p>
+            <p class="post-content">{{ post.content|djangomarkdown }} </p>
       </div>
   </div>
 </div>
