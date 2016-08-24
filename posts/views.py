@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import cache_page
 
 from .models import Post, Tag
 
@@ -41,6 +42,7 @@ def get_pages_list(current_page, num_pages, sep_str='...'):
 
 # @method_decorator(login_required, name='dispatch')
 # @login_req
+@method_decorator(cache_page(60 * 1), name='dispatch')
 class PostList(ListView):
     model = Post
     template_name = "blog/post_list.html"
