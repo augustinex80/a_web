@@ -11,9 +11,19 @@
       </div>
       <div class="media-body">
             <h3 class="media-heading"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
-      {% if post.summary %}
-            <p class="post-summary">{{ post.summary }}</p>
-      {% endif %}
+{#      {% if post.summary %}#}
+{#            <p class="post-summary">{{ post.summary }}</p>#}
+{#      {% endif %}#}
+            <p>
+                {% if post.tag.all %}
+
+                      {% for t in post.tag.all %}
+                          <a href="{% url 'post:tag_posts' t.id t.name %}">{{ t.name }}</a>{% if not forloop.last %} , {% endif %}
+                      {% endfor %}
+                      {% else %}
+
+                    {% endif %}
+            </p>
             <p class="post-comment post-detail-comment">
               {% if post.category %}
               <a href="{% url 'post:list_of_category' post.category_id %}">{{ post.category.name }}</a>

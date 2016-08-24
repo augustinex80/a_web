@@ -11,7 +11,7 @@ def get_pic_location(instance, filename):
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=120)
+    name = models.CharField(max_length=120, unique=True)
     timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
     updated = models.DateTimeField(auto_now=False, auto_now_add=True)
 
@@ -26,7 +26,7 @@ class Tag(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=120)
+    name = models.CharField(max_length=120, unique=True)
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 
@@ -51,7 +51,7 @@ class Post(models.Model):
         (PUBLISHED, 'published')
     )
 
-    category = models.ForeignKey('Category', null=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey('Category',blank=True, null=True, on_delete=models.SET_NULL)
     title = models.CharField(max_length=120)
     slug = models.SlugField(max_length=100, allow_unicode=True)
     summary = models.CharField(max_length=200, null=True, blank=True)
@@ -71,6 +71,7 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
+
         return reverse('post:detail', args=(self.pk, self.slug,))
 
     class Meta:
