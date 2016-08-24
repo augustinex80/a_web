@@ -1,2 +1,9 @@
 # pycharm
 .idea
+
+# production
+*production.py
+
+# pycache
+*/__pycache__/
+*.pyc
