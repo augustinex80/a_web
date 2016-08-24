@@ -21,9 +21,6 @@ class Tag(models.Model):
     def get_posts_count(self):
         return self.post_set.count()
 
-    def get_posts(self):
-        return self.post_set.all()
-
     class Meta:
         verbose_name = verbose_name_plural = 'Tags'
 
@@ -65,7 +62,7 @@ class Post(models.Model):
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
     status = models.IntegerField(default=PUBLISHED, choices=POST_STATUS)
-    tag = models.ManyToManyField(Tag)
+    tag = models.ManyToManyField(Tag, through='PTRelations')
 
     def __unicode__(self):
         return self.title
@@ -80,4 +77,11 @@ class Post(models.Model):
         ordering = ['-timestamp', ]
 
 
+class PTRelations(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 
+    def __str__(self):
+        return self.post.title + ' - ' + self.tag.name

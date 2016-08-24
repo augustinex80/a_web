@@ -42,7 +42,7 @@ def get_pages_list(current_page, num_pages, sep_str='...'):
 
 # @method_decorator(login_required, name='dispatch')
 # @login_req
-@method_decorator(cache_page(60 * 1), name='dispatch')
+# @method_decorator(cache_page(60 * 1), name='dispatch')
 class PostList(ListView):
     model = Post
     template_name = "blog/post_list.html"
