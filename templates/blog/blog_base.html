@@ -5,15 +5,15 @@
 {% endblock %}
 {% block blog_content %}
 <div class="container content">
-          <div class="row">
-              <div class="col-md-3">
-                  {% include 'blog/blog_left.html' %}
-              </div>
-              <div class="col-md-8 col-md-offset-1">
-              {% block blog_right %}
-                  111
-              {% endblock blog_right %}
-              </div>
+      <div class="row">
+          <div class="col-md-3">
+              {% include 'blog/blog_left.html' %}
+          </div>
+          <div class="col-md-8 col-md-offset-1">
+          {% block blog_right %}
+              111
+          {% endblock blog_right %}
           </div>
       </div>
+  </div>
 {% endblock %}
