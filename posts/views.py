@@ -129,8 +129,12 @@ class TagList(ListView):
             c = t.get_posts_count()
             if c > 0:
                 t.p_count = c
-        max_count = max(tags, key=lambda tg:tg.p_count).p_count
-        min_count = min(tags, key=lambda tg:tg.p_count).p_count
+        max_count = 0
+        min_count = 0
+        if tags.exists():
+            max_count = max(tags, key=lambda tg:tg.p_count).p_count
+            min_count = min(tags, key=lambda tg:tg.p_count).p_count
+
         td = TagsCloud(min_count, max_count)
         for tag in tags:
             tag.css = td.get_css(tag.p_count)
