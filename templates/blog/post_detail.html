@@ -31,7 +31,10 @@
               未分类
               {% endif %}
               - 阅读 {{ post.click }} - 赞 {{ post.commend }} - {{ post.updated|timesince }} ago</p>
-            <p class="post-content">{{ post.content|djangomarkdown }} </p>
+              <div class="post-content">
+
+                  {{ post.content|djangomarkdown }}
+              </div>
       </div>
   </div>
 </div>
