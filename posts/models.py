@@ -67,7 +67,7 @@ class Post(models.Model):
 
     status = models.IntegerField('状态', default=PUBLISHED, choices=POST_STATUS)
     tag = models.ManyToManyField(Tag, verbose_name='标签', through='PTRelations')
-    author = models.ForeignKey(User, verbose_name='作者')
+    author = models.ForeignKey(User, verbose_name='作者', null=True, blank=True)
 
     def __str__(self):
         return self.title
