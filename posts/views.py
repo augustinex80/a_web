@@ -7,7 +7,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_page
 
-from .models import Post, Tag
+from .models import Post, Tag, PTRelations
 
 
 def login_req(view):
@@ -50,34 +50,36 @@ class PostList(ListView):
 
     paginate_by = settings.ITEMS_PER_PAGE
     page_kwarg = settings.PAGE_KWARG
+    top_data = []
 
     def get_queryset(self):
-        # category filter, query filter
-        cate_id = self.kwargs.get('cate_id')
-        q = self.request.GET.get('q')
+        q_condition = dict()
+        cate_id = self.kwargs.get('cate_id', None)
+        q = self.request.GET.get('q', None)
+        if cate_id:
+            q_condition['category_id'] = cate_id
 
         # tag filter
         tid = self.kwargs.get('tid', None)
         tname = self.kwargs.get('tname', None)
         if tid and tname:
-            tag = get_object_or_404(Tag, pk=tid, name=tname)
-            return tag.post_set.all()
-        queryset = Post.objects.all()
+            get_object_or_404(Tag, pk=tid, name=tname)
+            q_condition['tag__name'] = tname
 
         # admin can read every post.
         if not self.request.user.is_staff:
-            queryset = queryset.filter(status=1, is_public=True)
+            q_condition['status'] = 1
+            q_condition['is_public'] = True
 
-        if cate_id:
-            queryset = queryset.filter(category_id=cate_id)
+        queryset = Post.objects.filter(**q_condition)
         if q:
             queryset = queryset.filter(Q(title__icontains=q)|
                                        Q(summary__icontains=q)|
                                        Q(content__icontains=q)|
                                        Q(category__name__icontains=q)
                                        ).distinct()
-
-        return queryset
+        self.top_data = queryset.filter(is_top=True)
+        return queryset.filter(is_top=False)
 
     def get_context_data(self, **kwargs):
         context = super(PostList, self).get_context_data(**kwargs)
@@ -86,7 +88,7 @@ class PostList(ListView):
         num_pages = context['paginator'].num_pages
         context['pages'] = get_pages_list(current_page, num_pages)
         context['blog'] = 1
-        context['top_post'] = self.get_queryset().filter(is_top=True)
+        context['top_post'] = self.top_data
         return context
 
 

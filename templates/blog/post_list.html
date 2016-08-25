@@ -1,7 +1,7 @@
 {% extends 'blog/blog_content.html' %}
 {% load static %}
 {% block post_list %}
-    {% for post in top_post %}
+    {% for post in top_post  %}
     <div class="post border-top">
       <div class="media">
           <div class="media-left media-top">
@@ -42,9 +42,9 @@
           </div>
       </div>
     </div>
+
     {% endfor %}
     {% for post in posts  %}
-        {% if not post.is_top %}
     <div class="post border-top">
       <div class="media">
           <div class="media-left media-top">
@@ -85,10 +85,6 @@
           </div>
       </div>
     </div>
-        {% endif %}
-    {% empty %}
-        <div class="post border-top">
-        没有内容
-        </div>
+
     {% endfor %}
 {% endblock post_list %}
