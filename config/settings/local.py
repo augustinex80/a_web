@@ -14,7 +14,9 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default.
     }
 }
-
+MIDDLEWARE_CLASSES += (
+        'debug_toolbar.middleware.DebugToolbarMiddleware',  # django-toolbar-debug
+)
 # django-debug-toolbar
 INSTALLED_APPS += (
     'debug_toolbar',
