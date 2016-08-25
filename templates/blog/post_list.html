@@ -1,7 +1,7 @@
 {% extends 'blog/blog_content.html' %}
 {% load static %}
 {% block post_list %}
-    {% for post in posts %}
+    {% for post in top_post %}
     <div class="post border-top">
       <div class="media">
           <div class="media-left media-top">
@@ -14,7 +14,12 @@
           </div>
           <div class="media-body">
 
-              <h4 class="media-heading"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
+              <h4 class="media-heading">
+                  <a href="{{ post.get_absolute_url }}">
+                      {% if post.is_top %}[置顶] - {% endif %}
+                      {{ post.title }}
+                  </a>
+              </h4>
 {#              <p class="post-summary">{% if post.summary %}{{ post.summary }}{% else %}{{ post.content|truncatechars:20 }}{% endif %}</p>#}
                 <p class="post-comment">
                   {% if post.tag.all %}
@@ -37,6 +42,50 @@
           </div>
       </div>
     </div>
+    {% endfor %}
+    {% for post in posts  %}
+        {% if not post.is_top %}
+    <div class="post border-top">
+      <div class="media">
+          <div class="media-left media-top">
+              <a href="{{ post.get_absolute_url }}">
+                  <img
+                          src="{% if post.pic %}{{ post.pic.url }}{% else %}{% static 'images/0.jpeg' %}{% endif %}"
+                          width="64" height="64"
+                          class="post-img bb2" alt="">
+              </a>
+          </div>
+          <div class="media-body">
+
+              <h4 class="media-heading">
+                  <a href="{{ post.get_absolute_url }}">
+                      {% if post.is_top %}[置顶] - {% endif %}
+                      {{ post.title }}
+                  </a>
+              </h4>
+{#              <p class="post-summary">{% if post.summary %}{{ post.summary }}{% else %}{{ post.content|truncatechars:20 }}{% endif %}</p>#}
+                <p class="post-comment">
+                  {% if post.tag.all %}
+
+                      {% for t in post.tag.all %}
+                          <a href="{% url 'post:tag_posts' t.id t.name %}">{{ t.name }}</a>{% if not forloop.last %} , {% endif %}
+                      {% endfor %}
+                      {% else %}
+                      &nbsp
+                    {% endif %}
+                </p>
+              <p class="post-comment">
+                  {% if post.category %}
+                  <a href="{% url 'post:list_of_category' post.category_id %}">{{ post.category.name }}</a>
+                  {% else %}
+                  未分类
+                  {% endif %}
+                  - 阅读 {{ post.click }} - 赞 {{ post.commend }} - {{ post.updated|timesince }} ago</p>
+
+          </div>
+      </div>
+    </div>
+        {% endif %}
     {% empty %}
         <div class="post border-top">
         没有内容

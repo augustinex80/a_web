@@ -52,16 +52,22 @@ class PostList(ListView):
     page_kwarg = settings.PAGE_KWARG
 
     def get_queryset(self):
+        # category filter, query filter
         cate_id = self.kwargs.get('cate_id')
         q = self.request.GET.get('q')
 
-        tid = self.kwargs.get('tid')
-        tname = self.kwargs.get('tname')
+        # tag filter
+        tid = self.kwargs.get('tid', None)
+        tname = self.kwargs.get('tname', None)
         if tid and tname:
             tag = get_object_or_404(Tag, pk=tid, name=tname)
             return tag.post_set.all()
-
         queryset = Post.objects.all()
+
+        # admin can read every post.
+        if not self.request.user.is_staff:
+            queryset = queryset.filter(status=1, is_public=True)
+
         if cate_id:
             queryset = queryset.filter(category_id=cate_id)
         if q:
@@ -75,12 +81,12 @@ class PostList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(PostList, self).get_context_data(**kwargs)
-
         #
-        current_page = self.request.GET.get('p')
+        current_page = self.request.GET.get('p', 0)
         num_pages = context['paginator'].num_pages
         context['pages'] = get_pages_list(current_page, num_pages)
         context['blog'] = 1
+        context['top_post'] = self.get_queryset().filter(is_top=True)
         return context
 
 
@@ -89,12 +95,14 @@ class PostDetail(DetailView):
     model = Post
 
     def get(self, request, *args, **kwargs):
-        if self.kwargs.get('slug') != self.get_object().slug:
+        if self.kwargs.get('slug', None) != self.get_object().slug:
             raise Http404("Page does not exist!")
+        if not self.get_object().is_public and not self.request.user.is_staff:
+            raise Http404("Deny to read this post!")
         return super(self.__class__, self).get(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
-        pid = self.kwargs.get('pid')
+        pid = self.kwargs.get('pid', None)
         return get_object_or_404(Post, id=pid)
 
     def get_context_data(self, **kwargs):
