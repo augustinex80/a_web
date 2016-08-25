@@ -21,3 +21,6 @@ INSTALLED_APPS += (
 )
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
 INTERNAL_IPS = ('127.0.0.1',)
+DEBUG_TOOLBAR_CONFIG = {
+    'JQUERY_URL': '/static/js/jquery/2.1.0/jquery.min.js',
+}
