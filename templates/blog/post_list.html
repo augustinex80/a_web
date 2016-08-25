@@ -33,7 +33,7 @@
                 </p>
               <p class="post-comment">
                   {% if post.category %}
-                  <a href="{% url 'post:list_of_category' post.category_id %}">{{ post.category.name }}</a>
+                  <a href="{{ post.category.get_absolute_url }}">{{ post.category.name }}</a>
                   {% else %}
                   未分类
                   {% endif %}
@@ -76,7 +76,7 @@
                 </p>
               <p class="post-comment">
                   {% if post.category %}
-                  <a href="{% url 'post:list_of_category' post.category_id %}">{{ post.category.name }}</a>
+                  <a href="{{ post.category.get_absolute_url }}">{{ post.category.name }}</a>
                   {% else %}
                   未分类
                   {% endif %}
@@ -85,6 +85,10 @@
           </div>
       </div>
     </div>
+        {% empty %}
+        <div class="post border-top">
+        没有更多内容
+        </div>
 
     {% endfor %}
 {% endblock post_list %}
