@@ -15,19 +15,19 @@
                   {% endfor %}
               </ul>
           </div>
-        <div class="tag">
-            <ul class="nav nav-pills border-top" role="tablist">
+{#        <div class="tag">#}
+{#            <ul class="nav nav-pills border-top" role="tablist">#}
 {#                <li role="presentation" class="active"><a href="#">Home <span class="badge">42</span></a></li>#}
 {#                <li role="presentation"><a href="#">Profile</a></li>#}
 {#                <li role="presentation"><a href="#">Messages <span class="badge">3</span></a></li>#}
-            {% for t in tags %}
-                <li role="presentation"><a href="{% url 'post:tag_posts' t.pk t.name %}"><span class="tag-blue">{{ t.name }}</span> <span class="badge">{{ t.posts_count }}</span></a></li>
-            {% empty %}
-                <li>还没有添加标签</li>
-            {% endfor %}
-            </ul>
-
-          </div>
+{#            {% for t in tags %}#}
+{#                <li role="presentation"><a href="{% url 'post:tag_posts' t.pk t.name %}"><span class="tag-blue">{{ t.name }}</span> <span class="badge">{{ t.posts_count }}</span></a></li>#}
+{#            {% empty %}#}
+{#                <li>还没有添加标签</li>#}
+{#            {% endfor %}#}
+{#            </ul>#}
+{##}
+{#          </div>#}
             {% block post_list %}
             {% endblock post_list %}
             {% block post_detail %}

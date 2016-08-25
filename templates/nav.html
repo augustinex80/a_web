@@ -17,8 +17,9 @@
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-              <li><a href="#" class="{% if home %}active{% endif %}">Home</a></li>
+              <li><a href="/" class="{% if home %}active{% endif %}">Home</a></li>
               <li><a href="{% url 'post:list' %}" class="{% if blog %}active{% endif %}">Blog</a></li>
+              <li><a href="{% url 'tag:tags_list' %}" class="{% if tag %}active{% endif %}">Tags</a></li>
           </ul>
             <form class="navbar-form navbar-right" action="{% url 'post:list' %}" role="search">
               <div class="form-group">

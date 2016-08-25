@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^post/', include('posts.urls', namespace='post')),
     url(r'^', include('posts.urls', namespace='post')),
+    url(r'^tag/', include('posts.urls', namespace='tag')),
     url(r'404^', TemplateView.as_view(template_name='404.html')),
 ]
 

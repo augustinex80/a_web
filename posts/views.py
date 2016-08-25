@@ -6,6 +6,7 @@ from django.http import Http404
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_page
+from .utils.tag_utils import TagsCloud
 
 from .models import Post, Tag, PTRelations
 
@@ -62,6 +63,8 @@ class PostList(ListView):
         # tag filter
         tid = self.kwargs.get('tid', None)
         tname = self.kwargs.get('tname', None)
+        print(tid)
+        print(tname)
         if tid and tname:
             get_object_or_404(Tag, pk=tid, name=tname)
             q_condition['tag__name'] = tname
@@ -111,6 +114,34 @@ class PostDetail(DetailView):
         context = super(PostDetail, self).get_context_data(**kwargs)
         context['blog'] = 1
 
+        return context
+
+
+class TagList(ListView):
+    template_name = 'blog/tags.html'
+    model = Tag
+    context_object_name = 'tags'
+
+    def get_queryset(self):
+
+        tags = Tag.objects.filter(ptrelations__isnull=False).distinct()
+        for t in tags:
+            c = t.get_posts_count()
+            if c > 0:
+                t.p_count = c
+        max_count = max(tags, key=lambda tg:tg.p_count).p_count
+        min_count = min(tags, key=lambda tg:tg.p_count).p_count
+        td = TagsCloud(min_count, max_count)
+        for tag in tags:
+            tag.css = td.get_css(tag.p_count)
+            print(tag.p_count)
+            print(tag.css)
+            print('-'*20)
+        return tags
+
+    def get_context_data(self, **kwargs):
+        context = super(TagList, self).get_context_data(**kwargs)
+        context['tag'] = 1
         return context
 
 

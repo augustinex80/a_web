@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/blog/blog_base.css' %}">
+{% endblock %}
+{% block blog_content %}
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-8 col-md-offset-2">
+                <ul class="tags-ul">
+                    {% for t in tags %}
+                        <li>
+                            <a href="{% url 'tag:tag_posts' t.id t.name %}"><span class="{{ t.css }}">{{ t.name }}</span></a>
+                        </li>
+                    {% empty %}
+                        <li>还没有标签</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

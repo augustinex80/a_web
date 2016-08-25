@@ -25,7 +25,7 @@
                   {% if post.tag.all %}
 
                       {% for t in post.tag.all %}
-                          <a href="{% url 'post:tag_posts' t.id t.name %}">{{ t.name }}</a>{% if not forloop.last %} , {% endif %}
+                          <a href="{% url 'tag:tag_posts' t.id t.name %}">{{ t.name }}</a>{% if not forloop.last %} , {% endif %}
                       {% endfor %}
                       {% else %}
                       &nbsp
